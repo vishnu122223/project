@@ -1,0 +1,20 @@
+name: Check for Broken Links
+
+on:
+  push:
+    branches:
+      - main  # or your default branch
+  schedule:
+    - cron: '0 3 * * *'  # Runs every day at 3:00 AM UTC
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run lychee to check for broken links
+        uses: lycheeverse/lychee-action@v1.8.0
+        with:
+          args: --verbose --exclude-mail --no-progress './/.md' './/.html'
